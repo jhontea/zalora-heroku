@@ -97,11 +97,11 @@ return [
 
         'jawsdb-heroku' => [
             'driver' => 'mysql',
-            'host' => $jawsdb_url['host'],
-            'port' => env('DB_PORT', '3306'),
-            'database' => substr($jawsdb_url['path'], 1),
-            'username' => $jawsdb_url['user'],
-            'password' => $jawsdb_url['pass'],
+            'host' => 'i5x1cqhq5xbqtv00.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            'port' => '3306',
+            'database' => 'exce2b8tk0bn0k5c',
+            'username' => 'l7hy5w8yg3nv4pgq',
+            'password' => 'ofggoogqeipa5pej',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci'
         ]
