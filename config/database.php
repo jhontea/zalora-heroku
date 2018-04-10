@@ -3,6 +3,10 @@
 return [
 
     $heroku_db_url = parse_url(env('DATABASE_URL', "postgres://forge:forge@localhost:5432/forge")),
+    
+    $cleardb_url = parse_url(env('DATABASE_URL', "mysql://b19434ac64ae09:aa2d1560@us-cdbr-iron-east-05.cleardb.net/heroku_751cf8a45a291db?reconnect=true")),
+    
+    $jawsdb_url = parse_url(env('DATABASE_URL', "mysql://l7hy5w8yg3nv4pgq:ofggoogqeipa5pej@i5x1cqhq5xbqtv00.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/exce2b8tk0bn0k5c")),
 
     /*
     |--------------------------------------------------------------------------
@@ -90,6 +94,17 @@ return [
             'prefix'   => '',
             'schema'   => 'public',
         ],
+
+        'jawsdb-heroku' => [
+            'driver' => 'mysql',
+            'host' => $jawsdb_url['host'],
+            'port' => env('DB_PORT', '3306'),
+            'database' => substr($jawsdb_url['path'], 1),
+            'username' => $jawsdb_url['user'],
+            'password' => $jawsdb_url['pass'],
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci'
+        ]
 
     ],
 
