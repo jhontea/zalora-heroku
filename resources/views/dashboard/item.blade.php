@@ -30,6 +30,11 @@
     .hover12 figure:hover img {
         opacity: .8;
     }
+
+    .grayscale {
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
+    }
 </style>
 @endsection
 
@@ -47,7 +52,7 @@ All Items
                         <div class="card card-user">
                             <div class="image hover12" style="height: 100%;width: 100%;margin-left: auto;margin-right: auto;">
                                 <a href="{{ 'items/'.$data->sku }}">
-                                    <figure><img src="{{ $data->image_link }}" alt="..."/></figure>
+                                    <figure><img @if(!$data->is_active) class="grayscale" @endif src="{{ $data->image_link }}" alt="..."/></figure>
                                 </a>
                             </div>
                             <div class="content" style="min-height: 100px;">

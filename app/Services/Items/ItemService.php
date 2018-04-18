@@ -95,7 +95,7 @@ class ItemService {
     // Get all user items
     public function getUserItems() {
         return DB::table('users as u')
-                    ->select('i.sku', 'i.image_link', 'i.discount', 'i.title', 'i.brand', 'i.price', 'i.price_discount')
+                    ->select('i.sku', 'i.image_link', 'i.discount', 'i.title', 'i.brand', 'i.price', 'i.price_discount', 'i.is_active')
                     ->join('user_items as ui', 'ui.user_id', '=', 'u.id')
                     ->join('items as i', 'ui.item_id', '=', 'i.id')
                     ->where('u.id', \Auth::user()->id)
