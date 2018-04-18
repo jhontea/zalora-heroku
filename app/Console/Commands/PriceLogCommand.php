@@ -56,24 +56,26 @@ class PriceLogCommand extends Command
         $items = $itemService->getAll();
 
         foreach ($items as $key => $item) {
-            // get data from scrape item
-            $dataScrape = $itemScrapeService->doGetScrape($item->url);
+            if ($item->is_active) {
+                // get data from scrape item
+                $dataScrape = $itemScrapeService->doGetScrape($item->url);
 
-            if ($dataScrape) {
-                // store data success
-                $dataScrape['id'] = $item->id;
-                $itemPriceLogService->store($dataScrape);
-                $success[] = $dataScrape;
-            } else {
-                // store data failed
-                // it can be caused by in active item on zalora website
-                $failed[] = $item;
-                CheckFailedPriceLog::dispatch($item);
-                $itemPriceLogService->storeFailed($item->id);
+                if ($dataScrape) {
+                    // store data success
+                    $dataScrape['id'] = $item->id;
+                    $itemPriceLogService->store($dataScrape);
+                    $success[] = $dataScrape;
+                } else {
+                    // store data failed
+                    // it can be caused by in active item on zalora website
+                    $failed[] = $item;
+                    CheckFailedPriceLog::dispatch($item);
+                    $itemPriceLogService->storeFailed($item->id);
+                }
+
+                // for preventing robot detection
+                if ($key % 10 == 0) sleep(1);
             }
-
-            // for preventing robot detection
-            if ($key % 10 == 0) sleep(1);
         }
 
         $this->info('success');
