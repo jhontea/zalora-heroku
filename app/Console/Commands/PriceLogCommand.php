@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CheckFailedPriceLog;
 use App\Services\ItemPriceLogs\ItemPriceLogService;
 use App\Services\Items\ItemScrapeService;
 use App\Services\Items\ItemService;
 use Illuminate\Console\Command;
+use Log;
+use Mail;
 
 class PriceLogCommand extends Command
 {
@@ -63,7 +66,9 @@ class PriceLogCommand extends Command
                 $success[] = $dataScrape;
             } else {
                 // store data failed
-                $failed[] = $dataScrape;
+                // it can be caused by in active item on zalora website
+                $failed[] = $item;
+                CheckFailedPriceLog::dispatch($item);
                 $itemPriceLogService->storeFailed($item->id);
             }
 
