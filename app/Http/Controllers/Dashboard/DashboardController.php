@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Services\Items\ItemService;
+use App\Services\Dashboards\DashboardService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index() {
         $itemService = new ItemService();
+        $dashboardService = new DashboardService();
 
+        $actIn = $dashboardService->getActiveInactiveItem();
+        $countCategories = $dashboardService->getCountCategories();
         $userItems = $itemService->getUserItems();
-        return view('dashboard.index', compact('userItems'));
+        return view('dashboard.index', compact('userItems', 'actIn', 'countCategories'));
     }
 
     public function user() {

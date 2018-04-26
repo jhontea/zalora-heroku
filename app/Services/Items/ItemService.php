@@ -99,6 +99,8 @@ class ItemService {
                     ->join('user_items as ui', 'ui.user_id', '=', 'u.id')
                     ->join('items as i', 'ui.item_id', '=', 'i.id')
                     ->where('u.id', \Auth::user()->id)
+                    ->orderBy('i.is_active', 'desc')
+                    ->orderBy('i.created_at', 'desc')
                     ->get();
     }
 

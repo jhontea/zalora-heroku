@@ -49,7 +49,7 @@ All Items
                 @if ($userItems)
                     @foreach ($userItems as $data)
                     <div class="col-lg-3 col-md-5" style="padding-bottom: 15px;">
-                        <div class="card card-user">
+                        <div class="card card-user" @if(!$data->is_active) style="background-color: lightgray"  @endif>
                             <div class="image hover12" style="height: 100%;width: 100%;margin-left: auto;margin-right: auto;">
                                 <a href="{{ 'items/'.$data->sku }}">
                                     <figure><img @if(!$data->is_active) class="grayscale" @endif src="{{ $data->image_link }}" alt="..."/></figure>

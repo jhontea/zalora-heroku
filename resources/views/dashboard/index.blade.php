@@ -109,78 +109,47 @@ Dashboard
                 </div>
             </div>
         </div>
+        <!-- Graphic -->
         <div class="row">
-
-            <div class="col-md-12">
+            <!-- Active -->
+            <div class="col-md-6">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Users Behavior</h4>
-                        <p class="category">24 Hours performance</p>
+                        <h4 class="title">Items</h4>
+                        <p class="category">Active or Inactive</p>
                     </div>
                     <div class="content">
-                        <div id="chartHours" class="ct-chart"></div>
+                        <div id="chartActIn" class="ct-chart ct-perfect-fourth"></div>
+
                         <div class="footer">
                             <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Click
-                                <i class="fa fa-circle text-warning"></i> Click Second Time
+                                <i class="fa fa-circle text-info"></i> Active
+                                <i class="fa fa-circle text-warning"></i> Inactive
                             </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated 3 minutes ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Categories</h4>
+                        <p class="category">Item Categories</p>
+                    </div>
+                    <div class="content">
+                        <div id="chartCategory" class="ct-chart ct-perfect-fourth"></div>
+
+                        <div class="footer">
+                            <div class="chart-legend">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Email Statistics</h4>
-                        <p class="category">Last Campaign Performance</p>
-                    </div>
-                    <div class="content">
-                        <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-
-                        <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Bounce
-                                <i class="fa fa-circle text-warning"></i> Unsubscribe
-                            </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="ti-timer"></i> Campaign sent 2 days ago
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card ">
-                    <div class="header">
-                        <h4 class="title">2015 Sales</h4>
-                        <p class="category">All products including Taxes</p>
-                    </div>
-                    <div class="content">
-                        <div id="chartActivity" class="ct-chart"></div>
-
-                        <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Tesla Model S
-                                <i class="fa fa-circle text-warning"></i> BMW 5 Series
-                            </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="ti-check"></i> Data information certified
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- End Graphic -->
     </div>
 </div>
 @endsection
@@ -201,6 +170,54 @@ Dashboard
             timer: 300
         });
         @endif
+
+        Chartist.Pie('#chartActIn', {
+          labels: ['{{ $actIn->active }}','{{ $actIn->inactive }}'],
+          series: [ {{ $actIn->active }}, {{ $actIn->inactive }}]
+        });
+
+        Chartist.Bar('#chartCategory', {
+            labels: [
+                @foreach($countCategories as $category)
+                    '{{ $category->category }}',
+                @endforeach
+            ],
+            series: [
+                @foreach($countCategories as $category)
+                    {{ $category->total }},
+                @endforeach
+            ]
+        }, {
+            distributeSeries: true
+        });
+
+        var data = {
+            labels: ['Bananas', 'Apples', 'Grapes'],
+            series: [20, 15, 40]
+        };
+
+        var options = {
+            labelInterpolationFnc: function(value) {
+                return value[0]
+            }
+        };
+
+        var responsiveOptions = [
+            ['screen and (min-width: 640px)', {
+                chartPadding: 130,
+                labelOffset: 100,
+                labelDirection: 'explode',
+                labelInterpolationFnc: function(value) {
+                return value;
+                }
+            }],
+            ['screen and (min-width: 1024px)', {
+                labelOffset: 60,
+                chartPadding: 20
+            }]
+        ];
+
+        // new Chartist.Pie('#chartCategory', data, options, responsiveOptions);
 
     });
 </script>
