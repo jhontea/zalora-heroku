@@ -104,6 +104,24 @@ class ItemService {
                     ->get();
     }
 
+    /**
+     * getUserItemByPriceLog
+     *
+     * @return void
+     */
+    public function getUserItemByPriceLog() {
+        return DB::table('item_price_logs as ipl')
+                    ->select('i.sku', 'i.image_link', 'ipl.discount', 'i.title', 'i.brand', 'ipl.price', 'ipl.price_discount', 'i.is_active')
+                    ->join('user_items as ui', 'ui.item_id', '=', 'ipl.item_id')
+                    ->join('items as i', 'i.id', '=', 'ipl.item_id')
+                    ->where('user_id', \Auth::user()->id)
+                    ->whereRaw('ipl.id IN (SELECT MAX(id) FROM item_price_logs GROUP BY item_id)')
+                    ->orderBy('i.is_active', 'desc')
+                    ->orderBy('i.created_at', 'desc')
+                    ->get();
+
+    }
+
     public function setInactive($id) {
         return DB::table('items')
                     ->where('id', $id)

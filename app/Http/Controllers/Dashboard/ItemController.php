@@ -12,7 +12,7 @@ class ItemController extends Controller
     public function index() {
         $itemService = new ItemService();
 
-        $userItems = $itemService->getUserItems();
+        $userItems = $itemService->getUserItemByPriceLog();
         return view('dashboard.item', compact('userItems'));
     }
 
@@ -21,7 +21,7 @@ class ItemController extends Controller
         $itemService = new ItemService();
 
         $userItems = $itemService->getFromSku($sku);
-
+        
         if ($userItems) {
             $itemPriceLogs = $itemPriceLogService->getPriceLogById($userItems->id);
             return view('dashboard.items.show', ['data' => $userItems, 'priceLogs' => $itemPriceLogs]);
