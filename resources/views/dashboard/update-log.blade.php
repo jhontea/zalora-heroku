@@ -16,6 +16,7 @@ Update Log
 @section('content')
         <div class="content">
             <div class="container-fluid">
+            @if (count($items))
                 @foreach($items as $item)
                 <div class="row">
                     <div class="col-lg-12">
@@ -85,6 +86,9 @@ Update Log
                     </div>
                 </div>
                 @endforeach
+            @else
+            There are no updated price log
+            @endif
             </div>
         </div>
 @endsection
