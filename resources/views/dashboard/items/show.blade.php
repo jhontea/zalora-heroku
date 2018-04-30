@@ -101,9 +101,9 @@ Item - {{ $data->title }}
                                 <figure><img src="{{ $data->image_link }}" alt="..."/></figure>
                             </div>
                             <div class="content" style="min-height: 100px;">
-                                @if($data->discount)
+                                <!-- @if($data->discount)
                                 <span class="centered-over-image">{{ $data->discount }}%</span>
-                                @endif
+                                @endif -->
                                 <div class="author" style="margin-top: 0px;">
                                   <h4 class="title">{{ $data->title }}<br />
                                      <a href="#scrape"><p style="color: rgb(0,0,0);">{{ $data->brand }}</p></a>

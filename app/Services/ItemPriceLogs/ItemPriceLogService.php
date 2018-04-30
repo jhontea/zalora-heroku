@@ -13,6 +13,14 @@ class ItemPriceLogService {
                     ->get();
     }
 
+    public function getPriceLogByIdLimit($itemId) {
+        return DB::table('item_price_logs')
+                    ->where('item_id', $itemId)
+                    ->limit(2)
+                    ->orderBy('id', 'desc')
+                    ->get();
+    }
+
     // Store item price log
     public function store($item) {
         return DB::table('item_price_logs')
