@@ -45,14 +45,14 @@ Dashboard
                             <div class="col-xs-7">
                                 <div class="numbers">
                                     <p>Update</p>
-                                    0
+                                    {{ count($countUserNotif) }}
                                 </div>
                             </div>
                         </div>
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                View log update
+                                <a href="{{ route('dashboard.update-log') }}">View log update</a>
                             </div>
                         </div>
                     </div>

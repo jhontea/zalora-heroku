@@ -26,15 +26,16 @@ class NotifItemPriceLogService {
         // get id after insert
         return DB::table('price_changes')
                     ->insertGetId([
-                        'item_id' => $data[0]->item_id,
-                        'price_now' => $data[0]->price,
-                        'price_prev' => $data[1]->price,
-                        'price_discount_now' => $data[0]->price_discount,
-                        'price_discount_prev' => $data[1]->price_discount,
-                        'discount_now' => $data[0]->discount,
-                        'discount_prev' => $data[1]->discount,
-                        'price_status' => $this->checkStatus($data[0]->price, $data[1]->price),
+                        'item_id'               => $data[0]->item_id,
+                        'price_now'             => $data[0]->price,
+                        'price_prev'            => $data[1]->price,
+                        'price_discount_now'    => $data[0]->price_discount,
+                        'price_discount_prev'   => $data[1]->price_discount,
+                        'discount_now'          => $data[0]->discount,
+                        'discount_prev'         => $data[1]->discount,
+                        'price_status'          => $this->checkStatus($data[0]->price, $data[1]->price),
                         'price_discount_status' => $this->checkStatus($data[0]->price_discount, $data[1]->price_discount),
+                        'created_at'            => Carbon::now()
                     ]);     
     }
 

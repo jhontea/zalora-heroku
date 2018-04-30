@@ -37,6 +37,12 @@
                         <p>Items</p>
                     </a>
                 </li>
+                <li @if(request()->route()->getName() == 'dashboard.update-log') class="active" @endif>
+                    <a href="{{ asset('dashboard/update-log') }}">
+                        <i class="ti-announcement"></i>
+                        <p>Updates</p>
+                    </a>
+                </li>
 				<li class="active-pro">
                     <a href="{{ asset('logout') }}">
                         <i class="ti-power-off"></i>

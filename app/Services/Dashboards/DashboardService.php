@@ -29,4 +29,10 @@ class DashboardService {
                     ->groupBy('i.category')
                     ->get();
     }
+
+    public function getCountUserNotifItemPrice() {
+        return DB::table('notif_price_logs')
+                    ->where('user_id', Auth::user()->id)
+                    ->get();
+    }
 }
