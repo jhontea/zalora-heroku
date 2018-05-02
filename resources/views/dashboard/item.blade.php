@@ -35,6 +35,12 @@
         -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
         filter: grayscale(100%);
     }
+
+    .card-user .author {
+        text-align: center;
+        text-transform: none;
+        height: 10px;
+    }
 </style>
 @endsection
 
@@ -48,7 +54,7 @@ All Items
                 <div class="row">
                 @if ($userItems)
                     @foreach ($userItems as $data)
-                    <div class="col-lg-3 col-md-5" style="padding-bottom: 15px;">
+                    <div class="col-lg-3 col-md-5 col-sm-4" style="padding-bottom: 15px;">
                         <div class="card card-user" @if(!$data->is_active) style="background-color: lightgray"  @endif>
                             <div class="image hover12" style="height: 100%;width: 100%;margin-left: auto;margin-right: auto;">
                                 <a href="{{ 'items/'.$data->sku }}">
