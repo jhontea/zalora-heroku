@@ -24,7 +24,9 @@ Update Log
                             <div class="content">
                                 <div class="typo-line">
                                     <h5>
-                                        <img class="category" src="{{ $item->image_link }}" style="width: 10%;">
+                                        <a href="{{ 'items/'.$item->sku }}">
+                                            <img class="category" src="{{ $item->image_link }}" style="width: 10%;">
+                                        </a>
                                         <strong>{{ $item->brand }}</strong> <br>
                                         {{ $item->title }} <br>
                                         <br>
