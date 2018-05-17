@@ -10,9 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Services\ItemPriceLogs\PriceChangeService;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('email', function() {
+    $priceChangeService = new PriceChangeService();
+    $items = $priceChangeService->getUserItemPriceChange();
+    return view('emails.email', ['items' => $items]);   
+});
 
 /*
 | -------------------------------------------------------------------------------------------------------

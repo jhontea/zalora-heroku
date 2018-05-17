@@ -52,6 +52,9 @@ class PriceLogCommand extends Command
         $success = [];
         $failed = [];
 
+        // Display Script Start time
+        $time_start = microtime(true);
+
         // get all items
         $items = $itemService->getAll();
 
@@ -82,5 +85,14 @@ class PriceLogCommand extends Command
         print_r($success);
         $this->alert('failed');
         print_r($failed);
+
+        // Display Script End time
+        $time_end = microtime(true);
+
+        //dividing with 60 will give the execution time in minutes other wise seconds
+        $execution_time = ($time_end - $time_start)/60;
+
+        //execution time of the script
+        echo 'Total Execution Time: '.$execution_time.' Mins';
     }
 }
