@@ -51,12 +51,14 @@ class ItemPriceLogUpdateCommand extends Command
         $items = $itemService->getAll();
 
         foreach ($items as $item) {
-            // get 2 row of every items on price log
-            $data = $itemPriceLogService->getPriceLogByIdLimit($item->id);
-            
-            if (count($data) > 1) {
-                // checking change of price
-                $notifItemPriceLogService->checkPriceUpdate($data);      
+            if ($item->is_active) {
+                // get 2 row of every items on price log
+                $data = $itemPriceLogService->getPriceLogByIdLimit($item->id);
+                
+                if (count($data) > 1) {
+                    // checking change of price
+                    $data = $notifItemPriceLogService->checkPriceUpdate($data);
+                }
             }
         }
 

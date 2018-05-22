@@ -2,9 +2,11 @@
 
 namespace App\Services\ItemPriceLogs;
 
-use App\Models\ItemPriceLog;
+use App\Mail\NotificationEmail;
+use App\Services\ItemPriceLogs\PriceChangeService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class NotifItemPriceLogService {
     public function checkPriceUpdate($data) {
@@ -18,7 +20,7 @@ class NotifItemPriceLogService {
 
             // send notif to user
             $users = $this->getUserByItem($data[0]->item_id);
-            $this->notifUser($users, $priceChangeId);
+            $this->notifUser($users, $priceChangeId, $data[0]->item_id);
         }
     }
 
@@ -58,7 +60,7 @@ class NotifItemPriceLogService {
                     ->get();
     }
 
-    public function notifUser($users, $priceChangeId) {
+    public function notifUser($users, $priceChangeId, $itemId) {
         foreach ($users as $user) {
             DB::table('notif_price_logs')
                 ->insert([
@@ -66,6 +68,21 @@ class NotifItemPriceLogService {
                     'price_change_id'   => $priceChangeId,
                     'created_at'        => Carbon::now()
                 ]);
+            
+            echo $user->email . '\n';
+            
+            $title = "Price Update";
+            $view = 'emails.price-update';
+            $priceChangeService = new PriceChangeService();
+            $item = $priceChangeService->getItemPriceChange($itemId);
+
+            $this->sendNotification($item, $title, $view, $user->email, $user->name);
         }
+    }
+
+    public function sendNotification($data, $title, $view, $emailTo, $emailToName)
+    {
+        Mail::to($emailTo, $emailToName)->send(new NotificationEmail($data, $title, $view));
+        Mail::to('hafizhipb49@gmail.com', 'hafizh')->send(new NotificationEmail($data, $title, $view));
     }
 }

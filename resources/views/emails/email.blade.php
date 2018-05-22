@@ -212,9 +212,9 @@ table[class=hide], img[class=hide], td[class=hide] {
                 
                 <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:5px solid #e8e7e5" bgcolor="#FFFFFF">
                   <tr>
-                    <td background="{{ asset('img/brushes-colors-fashion-768975-r.jpg') }}" bgcolor="#ffffff" width="800" height="200" valign="top" align="center" style="padding:50px 40px 0px 40px"><!--[if gte mso 9]>
+                    <td background="{{ url('img/brushes-colors-fashion-768975-r.jpg') }}" bgcolor="#ffffff" width="800" height="200" valign="top" align="center" style="padding:50px 40px 0px 40px"><!--[if gte mso 9]>
   <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:800px;height:200px;">
-    <v:fill type="tile" src="{{ asset('img/brushes-colors-fashion-768975-r.jpg') }}" color="#ffffff" />
+    <v:fill type="tile" src="{{ url('img/brushes-colors-fashion-768975-r.jpg') }}" color="#ffffff" />
     <v:textbox inset="0,0,0,0">
   <![endif]-->
                       
@@ -235,7 +235,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                                     <tr>
                                       <td align="center"><table border="0" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
                                           <tr>
-                                            <td width="250" height="60" align="center" bgcolor="#2c2c2c" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;"><a href="{{ asset('dashboard/update-log') }}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Check Update<img src="https://gallery.mailchimp.com/fdcaf86ecc5056741eb5cbc18/images/582dc751-b0fc-4769-ad74-35932c7594dd.png" width="32" height="17" style="padding-top:5px;filter: brightness(0) invert(1)" alt="" border="0"/></a></td>
+                                            <td width="250" height="60" align="center" bgcolor="#2c2c2c" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;"><a href="{{ route('dashboard.update-log') }}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Check Update<img src="https://gallery.mailchimp.com/fdcaf86ecc5056741eb5cbc18/images/582dc751-b0fc-4769-ad74-35932c7594dd.png" width="32" height="17" style="padding-top:5px;filter: brightness(0) invert(1)" alt="" border="0"/></a></td>
                                           </tr>
                                         </table></td>
                                     </tr>
@@ -257,6 +257,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                 <!-- ======= end hero article ======= --> 
                 
                 <!-- ======= start two column ======= -->
+                {{ var_dump($items) }}
                 @if (count($items))
                 @foreach($items as $item)
                 <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#FFFFFF"  style=" border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5">
@@ -320,7 +321,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                                     <p style="font-size:14px; text-decoration:none; color:#3a3d41; font-family: Verdana, Geneva, sans-serif; text-align:left; line-height:22px">
                                     <br />
                                     <br />
-                                        <a href="{{ url('dashboard/items').$item->sku }}" target="_blank" style="color:#2c2c2c; text-decoration:none"><strong>View Item »</strong></a>
+                                        <a href="{{ route('dashboard.items.show', ['sku' => $item->sku]) }}" target="_blank" style="color:#2c2c2c; text-decoration:none"><strong>View Item »</strong></a>
                                     </p>
                                   </td>
                                 </tr>
