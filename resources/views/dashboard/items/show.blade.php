@@ -18,6 +18,11 @@
         margin-bottom: 10px;
     }
 
+    .center {
+        width: 50%;
+        margin: 0 auto;
+    }
+
     .ct-series-a .ct-line,
     .ct-series-a .ct-point {
         stroke: rgb(0,0,0);
@@ -112,6 +117,12 @@ Item - {{ $data->title }}
                             </div>
                             <hr>
                         </div>
+                        <div class="center">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info btn-fill btn-wd">ZALORA</button>
+                            </div>
+                            
+                        </div>
                     </div>
 
                     <div class="col-md-9">
@@ -181,18 +192,19 @@ Item - {{ $data->title }}
             axisY: {
                 offset: 60
             },
-            height: "245px"
+            height: "245px",
+            width: "1200px"
         };
 
         var responsiveOptions = [
-          ['screen and (max-width: 640px)', {
-            seriesBarDistance: 5,
-            axisX: {
-              labelInterpolationFnc: function (value) {
-                return value[0];
-              }
-            }
-          }]
+        //   ['screen and (max-width: 640px)', {
+        //     seriesBarDistance: 5,
+        //     axisX: {
+        //       labelInterpolationFnc: function (value) {
+        //         return value[0];
+        //       }
+        //     }
+        //   }]
         ];
         
         var plugins = {

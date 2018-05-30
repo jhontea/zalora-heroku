@@ -13,6 +13,10 @@
     }
 }
 
+.zalora-logo.zalora-logo--white {
+    fill: #fff;
+}
+
 .icon-section {
 	margin: 0 0 3em;
 	clear: both;
