@@ -11,20 +11,20 @@
 |
 */
 
-use Mail;
-use App\Services\ItemPriceLogs\PriceChangeService;
+// use Mail;
+// use App\Services\ItemPriceLogs\PriceChangeService;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('email', function() {
-    $data = array('name'=>"Virat Gandhi");
+// Route::get('email', function() {
+//     $data = array('name'=>"Virat Gandhi");
    
-    Mail::send('emails.welcome', $data, function($message) {
-        $message->to('hafizhipb49@gmail.com', 'Tutorials Point')->subject('Laravel HTML Testing Mail');
-        $message->from('sibodatbodat@gmail.com', 'Zalora Sendgrid');
-     });
-     echo "HTML Email Sent. Check your inbox.";
-});
+//     Mail::send('emails.welcome', $data, function($message) {
+//         $message->to('hafizhipb49@gmail.com', 'Tutorials Point')->subject('Laravel HTML Testing Mail');
+//         $message->from('sibodatbodat@gmail.com', 'Zalora Sendgrid');
+//      });
+//      echo "HTML Email Sent. Check your inbox.";
+// });
 /*
 | -------------------------------------------------------------------------------------------------------
 | Dashboard 
