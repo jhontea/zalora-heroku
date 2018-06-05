@@ -89,6 +89,16 @@
         -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
         filter: grayscale(100%);
     }
+
+    #chartActivity {
+        overflow-x:  auto;
+        overflow-y:  hidden;
+    }
+
+    .card .ct-chart {
+        margin: 30px 0 30px;
+        height: 330px;
+    }
 </style>
 @endsection
 
@@ -119,7 +129,9 @@ Item - {{ $data->title }}
                         </div>
                         <div class="center">
                             <div class="text-center">
-                                <button type="submit" class="btn btn-info btn-fill btn-wd">ZALORA</button>
+                                <a href="{{ $data->url }}" target="_blank">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">View on ZALORA</button>
+                                </a>
                             </div>
                             
                         </div>
@@ -155,7 +167,7 @@ Item - {{ $data->title }}
 
 <?php
     foreach ($priceLogs as $log) {
-        $date[] = strftime('%e %b %Y', strtotime($log->created_at));
+        $date[] = strftime('%d-%m', strtotime($log->created_at));
         $price[] = $log->price;
         $priceDiscount[] = $log->price_discount;
     }
@@ -192,19 +204,19 @@ Item - {{ $data->title }}
             axisY: {
                 offset: 60
             },
-            height: "245px",
+            height: "300",
             width: "1200px"
         };
 
         var responsiveOptions = [
-        //   ['screen and (max-width: 640px)', {
-        //     seriesBarDistance: 5,
-        //     axisX: {
-        //       labelInterpolationFnc: function (value) {
-        //         return value[0];
-        //       }
-        //     }
-        //   }]
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
         ];
         
         var plugins = {
@@ -214,7 +226,7 @@ Item - {{ $data->title }}
         }
 
         Chartist.Line('#chartActivity', data, options, responsiveOptions, plugins);
-
+        
         // var chart = Chartist.Line('#chartActivity', {
         // labels: [1, 2, 3],
         // series: [
