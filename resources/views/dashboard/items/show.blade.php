@@ -242,6 +242,9 @@ Item - {{ $data->title }}
         };
 
         var options = {
+            lineSmooth: Chartist.Interpolation.none({
+                fillHoles: false
+            }),
             seriesBarDistance: 20,
             axisX: {
                 showGrid: false,
@@ -293,6 +296,9 @@ Item - {{ $data->title }}
             plugins: [
                 Chartist.plugins.tooltip()
             ],
+            lineSmooth: Chartist.Interpolation.none({
+                fillHoles: false
+            }),
             seriesBarDistance: 20,
             axisX: {
                 showGrid: false,
