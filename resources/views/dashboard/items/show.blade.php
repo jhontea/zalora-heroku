@@ -87,6 +87,27 @@
         opacity: 1; 
     }
 
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #99dcef; 
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #68B3C8; 
+    }
+
     .grayscale {
         -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
         filter: grayscale(100%);
@@ -176,7 +197,7 @@ Item - {{ $data->title }}
                                 <p class="category">Item price logs</p>
                             </div>
                             <div class="content">
-                                <div id="chartAct" class="ct-chart"></div>
+                                <div id="chartAct" class="ct-chart" dir="rtl"></div>
 
                                 <div class="footer">
                                     <div class="chart-legend">
