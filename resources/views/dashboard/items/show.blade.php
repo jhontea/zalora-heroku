@@ -236,7 +236,7 @@ Item - {{ $data->title }}
 
     $width = 1000;
 
-    if (count($priceLogs) > 12) $width += (count($priceLogs) - 12) * 100;
+    if (count($priceLogs) > 12) $width += (count($priceLogs) - 12) * 25;
 ?>
 
 @section('scripts')
