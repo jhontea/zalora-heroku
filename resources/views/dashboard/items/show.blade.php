@@ -55,9 +55,11 @@
         display: inline-block;
         opacity: 0;
         min-width: 5em;
+        margin-left: 1em;
+        margin-top: 7em;
         padding: .5em;
-        background: #F4C63D;
-        color: #453D3F;
+        background: #68B3C8;
+        color: #fff;
         font-family: Oxygen,Helvetica,Arial,sans-serif;
         font-weight: 700;
         text-align: center;
@@ -78,7 +80,7 @@
         height: 0;
         margin-left: -15px;
         border: 15px solid transparent;
-        border-top-color: #F4C63D; 
+        border-top-color: #68B3C8; 
     }
     
     .chartist-tooltip.tooltip-show {
@@ -91,6 +93,11 @@
     }
 
     #chartActivity {
+        overflow-x:  auto;
+        overflow-y:  hidden;
+    }
+
+    #chartAct {
         overflow-x:  auto;
         overflow-y:  hidden;
     }
@@ -140,7 +147,7 @@ Item - {{ $data->title }}
                     <div class="col-md-9">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">{{ $data->title }} - {{ $data->brand }}</h4>
+                                <h4 class="title">Last 5 days</h4>
                                 <p class="category">Item price logs</p>
                             </div>
                             <div class="content">
@@ -161,16 +168,54 @@ Item - {{ $data->title }}
                     </div>
 
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">All time</h4>
+                                <p class="category">Item price logs</p>
+                            </div>
+                            <div class="content">
+                                <div id="chartAct" class="ct-chart"></div>
+
+                                <div class="footer">
+                                    <div class="chart-legend">
+                                        <i class="fa fa-circle text-info"></i> Price
+                                        <i class="fa fa-circle text-warning"></i> Price Discount
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="ti-check"></i> Data information certified
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 @endsection
 
 <?php
     foreach ($priceLogs as $log) {
-        $date[] = strftime('%d-%m', strtotime($log->created_at));
+        $date[] = strftime('%d/%m/%Y', strtotime($log->created_at));
         $price[] = $log->price;
         $priceDiscount[] = $log->price_discount;
     }
+
+    $priceData = $price;
+    $priceDiscountData = $priceDiscount;
+    $dateData = $date;
+
+    if (count($priceLogs) > 5) {
+        $priceData = array_slice($price, count($price) - 5, count($price));
+        $priceDiscountData = array_slice($priceDiscount, count($priceDiscount) - 5, count($priceDiscount));
+        $dateData = array_slice($date, count($date) - 5, count($date));
+    }
+
+    $width = 1000;
+
+    if (count($priceLogs) > 12) $width += (count($priceLogs) - 12) * 100;
 ?>
 
 @section('scripts')
@@ -178,18 +223,18 @@ Item - {{ $data->title }}
     $(document).ready(function(){
         var data = {
           labels: [
-            @foreach($date as $d)
+            @foreach($dateData as $d)
             '{{ $d }}',
             @endforeach 
           ],
           series: [
             [
-                @foreach($price as $p)
+                @foreach($priceData as $p)
                 { meta: 'price', value: {!! $p !!} },
                 @endforeach 
             ],
             [
-                @foreach($priceDiscount as $pd)
+                @foreach($priceDiscountData as $pd)
                 { meta: 'price discount', value: {!! $pd !!} },
                 @endforeach    
             ]
@@ -204,8 +249,7 @@ Item - {{ $data->title }}
             axisY: {
                 offset: 60
             },
-            height: "300",
-            width: "1200px"
+            height: "300"
         };
 
         var responsiveOptions = [
@@ -227,25 +271,38 @@ Item - {{ $data->title }}
 
         Chartist.Line('#chartActivity', data, options, responsiveOptions, plugins);
         
-        // var chart = Chartist.Line('#chartActivity', {
-        // labels: [1, 2, 3],
-        // series: [
-        //     [
-        //     {meta: 'description', value: 1},
-        //     {meta: 'description', value: 5},
-        //     {meta: 'description', value: 3}
-        //     ],
-        //     [
-        //     {meta: 'other description', value: 2},
-        //     {meta: 'other description', value: 4},
-        //     {meta: 'other description', value: 2}
-        //     ]
-        // ]
-        // }, {
-        // plugins: [
-        //     Chartist.plugins.tooltip()
-        // ]
-        // });
+        var chart = Chartist.Line('#chartAct', {
+            labels: [
+                @foreach($date as $d)
+                '',
+                @endforeach 
+            ],
+            series: [
+                [
+                    @foreach($price as $p)
+                    { meta: '{{ $d }}', value: {!! $p !!} },
+                    @endforeach 
+                ],
+                [
+                    @foreach($priceDiscount as $pd)
+                    { meta: '{{ $d }}', value: {!! $pd !!} },
+                    @endforeach   
+                ]
+            ]
+        }, {
+            plugins: [
+                Chartist.plugins.tooltip()
+            ],
+            seriesBarDistance: 20,
+            axisX: {
+                showGrid: false,
+            },
+            axisY: {
+                offset: 60
+            },
+            height: "300",
+            width: {!! $width !!}
+        });
     });
 </script>
 @endsection
