@@ -4,6 +4,23 @@
 Dashboard
 @endsection
 
+@section('styles')
+<style>
+    .ct-series-b .ct-slice-pie, .ct-series-b .ct-area {
+        fill: #EB5E28;
+    }
+    .ct-label {
+        fill: #fff;
+        color: #fff;
+        font-size: 0.9em;
+        line-height: 1;
+    }
+    .chart-legend .text-warning, .chart-legend .text-warning:hover {
+        color: #EB5E28;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="content">
     <div class="container-fluid">

@@ -180,9 +180,9 @@ Item - {{ $data->title }}
                                         <i class="fa fa-circle text-warning"></i> Price Discount
                                     </div>
                                     <hr>
-                                    <div class="stats">
+                                    <!-- <div class="stats">
                                         <i class="ti-check"></i> Data information certified
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -205,9 +205,9 @@ Item - {{ $data->title }}
                                         <i class="fa fa-circle text-warning"></i> Price Discount
                                     </div>
                                     <hr>
-                                    <div class="stats">
+                                    <!-- <div class="stats">
                                         <i class="ti-check"></i> Data information certified
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

@@ -25,12 +25,12 @@ User Profile
                                         <div class="col-md-7">
                                             <div class="form-group">
                                                 <label>Full Name</label>
-                                                <input name="name" type="text" class="form-control border-input" placeholder="Full Name" value="{{ $user->name }}">
+                                                <input name="name" type="text" class="form-control border-input" disabled placeholder="Full Name" value="{{ $user->name }}">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Address</label>
@@ -58,11 +58,11 @@ User Profile
                                                 <input type="number" class="form-control border-input" placeholder="ZIP Code">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
-                                    <div class="text-center">
+                                    <!-- <div class="text-center">
                                         <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
-                                    </div>
+                                    </div> -->
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
