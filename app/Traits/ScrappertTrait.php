@@ -30,7 +30,7 @@ trait ScraperTrait
                 return 0;
             }
 
-            return new Crawler($html);;
+            return new Crawler($html);
         } catch (Exception $err) {
             Log::error("[SCRAPE-TRAIT][GET-SCRAPE][{$url}] {$err->getMessage()}");
             return 0;

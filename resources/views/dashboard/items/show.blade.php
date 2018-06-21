@@ -303,13 +303,13 @@ Item - {{ $data->title }}
             ],
             series: [
                 [
-                    @foreach($price as $p)
-                    { meta: '{{ $d }}', value: {!! $p !!} },
+                    @foreach($priceLogs as $p)
+                    { meta: "{{ strftime('%d/%m/%Y', strtotime($p->created_at)) }}", value: {!! $p->price !!} },
                     @endforeach 
                 ],
                 [
-                    @foreach($priceDiscount as $pd)
-                    { meta: '{{ $d }}', value: {!! $pd !!} },
+                    @foreach($priceLogs as $pd)
+                    { meta: "{{ strftime('%d/%m/%Y', strtotime($pd->created_at)) }}", value: {!! $pd->price_discount !!} },
                     @endforeach   
                 ]
             ]

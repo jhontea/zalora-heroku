@@ -33,6 +33,7 @@ class DashboardService {
     public function getCountUserNotifItemPrice() {
         return DB::table('notif_price_logs')
                     ->where('user_id', Auth::user()->id)
+                    ->where('is_read', 0)
                     ->get();
     }
 }
