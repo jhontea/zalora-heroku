@@ -13,6 +13,7 @@
 
 // use Mail;
 // use App\Services\ItemPriceLogs\PriceChangeService;
+use App\Services\Items\ItemScrapeService;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
@@ -25,6 +26,20 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 //      });
 //      echo "HTML Email Sent. Check your inbox.";
 // });
+
+Route::get('test', function() {
+    // get DOM element
+    $itemScrapeService = new ItemScrapeService();
+
+    // scrap brand carvil
+    $url = 'https://www.zalora.co.id/carvil';
+    $query = ['page' => 3];
+    $result = $itemScrapeService->brandScrape($url, $query);
+    dd($url, $result);
+    return response()->json($result);
+});
+
+
 /*
 | -------------------------------------------------------------------------------------------------------
 | Dashboard 

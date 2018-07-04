@@ -22,10 +22,10 @@ trait ScraperTrait
      * 
      * @param string $url url where website scrape
      */
-    public function getScrape($url) {
+    public function getScrape($url, $query=null) {
         try {
             //check URL
-            $html = $this->checkUrl($url);
+            $html = $this->checkUrl($url, $query);
             if (!$html) {
                 return 0;
             }
@@ -37,13 +37,19 @@ trait ScraperTrait
         }
     }
 
-    public function checkUrl($url)
+    public function checkUrl($url, $query=null)
     {
         $client = new Client();
     
         try {
-            $request = $client->get($url)->getBody()->getContents();
-            return $request;
+            $request = $client->get(
+                $url,
+                [
+                    'query' => $query
+                ]
+            );
+
+            return $request->getBody()->getContents();
         } catch (Exception $e) {
             if ($e->getCode() == 404) {
                 //url is gone

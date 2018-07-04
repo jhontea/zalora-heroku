@@ -22,6 +22,18 @@ class ItemScrapeService {
         'data-active'       => '//*[@id="active-segments-roots"]'
     ];
 
+    public function brandScrape($url, $query=null) {
+        // get DOM element
+        $scrape = $this->getScrape($url, $query);
+        dd($url, $scrape->html());
+        $script = preg_match('/"docs":\[{(.*)\]},"facet_counts":/siU', $scrape->html(), $matchesScript);
+
+        $string = "{" . substr($matchesScript[0], 0, -16);
+        $result = (array)json_decode($string);
+
+        return $result;
+    }
+
     public function getItemScrape($url) {
         $itemService = new ItemService();
         $data = $itemService->hasItem($url);
