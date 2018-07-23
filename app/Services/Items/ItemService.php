@@ -118,7 +118,7 @@ class ItemService {
                     ->whereRaw('ipl.id IN (SELECT MAX(id) FROM item_price_logs GROUP BY item_id)')
                     ->orderBy('i.is_active', 'desc')
                     ->orderBy('i.created_at', 'desc')
-                    ->get();
+                    ->paginate(20);
 
     }
 

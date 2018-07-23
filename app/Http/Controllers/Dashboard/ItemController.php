@@ -13,6 +13,7 @@ class ItemController extends Controller
         $itemService = new ItemService();
 
         $userItems = $itemService->getUserItemByPriceLog();
+      
         return view('dashboard.item', compact('userItems'));
     }
 

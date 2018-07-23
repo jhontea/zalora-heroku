@@ -11,7 +11,7 @@ Dashboard
     }
     .ct-label {
         fill: #fff;
-        color: #fff;
+        color: #2c2c2c;
         font-size: 0.9em;
         line-height: 1;
     }

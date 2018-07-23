@@ -41,6 +41,21 @@
         text-transform: none;
         height: 10px;
     }
+
+    .pagination > li > a,
+    .pagination > li > span {
+        color: rgb(0, 0, 0); // use your own color here
+    }
+
+    .pagination > .active > a,
+    .pagination > .active > a:focus,
+    .pagination > .active > a:hover,
+    .pagination > .active > span,
+    .pagination > .active > span:focus,
+    .pagination > .active > span:hover {
+        background-color: rgb(0, 0, 0);
+        border-color: rgb(0, 0, 0);
+    }
 </style>
 @endsection
 
@@ -99,6 +114,9 @@ All Items
                         </div>
                     </div>
                     @endforeach
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 15px;">
+                        {{ $userItems->links() }}
+                    </div>
                 @endif
                 </div>
             </div>
