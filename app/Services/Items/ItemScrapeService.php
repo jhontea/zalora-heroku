@@ -42,35 +42,38 @@ class ItemScrapeService {
 
     public function doGetScrape($url) {
         // get DOM element
-        $scrape = $this->getScrape($url);
+        try {
+            $scrape = $this->getScrape($url);
 
-        if ($scrape) {
-            $price = $scrape->filterXpath($this->style['price'])->count()?
-                        preg_replace('/\D/', "", $scrape->filterXpath($this->style['price'])->text()) : '';
+            if ($scrape) {
+                $price = $scrape->filterXpath($this->style['price'])->count()?
+                            preg_replace('/\D/', "", $scrape->filterXpath($this->style['price'])->text()) : '';
 
-            // Filter DOM using xpath style
-            $result = [
-                'url'               => $url,
-                'sku'               => $scrape->filterXpath($this->style['sku'])->attr('value'),
-                'brand'             => $scrape->filterXpath($this->style['brand'])->text(),
-                'title'             => $scrape->filterXpath($this->style['title'])->text(),
-                'price'             => $price,
-                'price_discount'    => $scrape->filterXpath($this->style['price_discount'])->count()?
-                                        preg_replace('/\D/', "", $scrape->filterXpath($this->style['price_discount'])->text()) :
-                                        $price,
-                'image_link'        => $scrape->filterXpath($this->style['image_link'])->attr('src'),
-                'segment'           => str_replace('/', '', $scrape->filterXpath($this->style['data-active'])
-                                        ->attr('data-active-segment')),
-                'category'          => $scrape->filterXpath($this->style['data-active'])->attr('data-active-root')
-            ];
+                // Filter DOM using xpath style
+                $result = [
+                    'url'               => $url,
+                    'sku'               => $scrape->filterXpath($this->style['sku'])->attr('value'),
+                    'brand'             => $scrape->filterXpath($this->style['brand'])->text(),
+                    'title'             => $scrape->filterXpath($this->style['title'])->text(),
+                    'price'             => $price,
+                    'price_discount'    => $scrape->filterXpath($this->style['price_discount'])->count()?
+                                            preg_replace('/\D/', "", $scrape->filterXpath($this->style['price_discount'])->text()) :
+                                            $price,
+                    'image_link'        => $scrape->filterXpath($this->style['image_link'])->attr('src'),
+                    'segment'           => str_replace('/', '', $scrape->filterXpath($this->style['data-active'])
+                                            ->attr('data-active-segment')),
+                    'category'          => $scrape->filterXpath($this->style['data-active'])->attr('data-active-root')
+                ];
 
-            $result['discount'] = $result['price_discount']?
-                                    round(($result['price'] - $result['price_discount']) / $result['price'] * 100) : 0;
+                $result['discount'] = $result['price_discount']?
+                                        round(($result['price'] - $result['price_discount']) / $result['price'] * 100) : 0;
 
-            \Session::put('item-data', $result);
-            return $result;
-        } 
-        
-        return 0;
+                \Session::put('item-data', $result);
+                return $result;
+            } 
+            return 0;
+        } catch (\Exception $err) {
+            return 0;
+        }
     }
 }
