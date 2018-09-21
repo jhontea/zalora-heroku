@@ -13,7 +13,22 @@ class ItemController extends Controller
         $itemService = new ItemService();
 
         $userItems = $itemService->getUserItemByPriceLog();
-        return view('dashboard.item', compact('userItems'));
+        $categories = $itemService->getCategoriesByUserItem($userItems);
+
+        return view('dashboard.item', compact('userItems', 'categories'));
+    }
+
+    public function filter()
+    {
+        $itemService = new ItemService();
+
+        $input = request()->all();
+        $category = isset($input['category'])? $input['category']: '';
+        $sorting = isset($input['sorting'])? $input['sorting']: '';
+
+        $userItems = $itemService->getUserItemFilter($category, $sorting);
+        
+        return view('dashboard.items.item-ajax', compact('userItems'));
     }
 
     public function show($sku) {

@@ -13,6 +13,23 @@
 
 // use Mail;
 // use App\Services\ItemPriceLogs\PriceChangeService;
+use App\Services\Items\ItemScrapeService;
+Route::get('test', function() {
+    return \DB::table('users')->get();
+
+    $url = 'https://www.zalora.co.id/bodypack-bodypack-prodigers-sydney---abu-biru-grey-1327563.html?last_csa=justforyou_men';
+
+    $url = 'asd';
+
+    // $url = 'https://www.youtube.com/';
+
+    $itemScrapeService = new ItemScrapeService();
+    dd(
+        $itemScrapeService->getItemScrape($url), 
+        \Session::has('errorURL') ? \Session::pull('errorCode') : '',
+        \Session::has('errorURL') ? \Session::pull('errorURL') : ''
+    );
+});
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
@@ -90,6 +107,11 @@ Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' 
     Route::get('items', [
         'uses'  => 'ItemController@index',
         'as'    => 'dashboard.items'
+    ]);
+
+    Route::get('items/filter', [
+        'uses'  => 'ItemController@filter',
+        'as'    => 'dashboard.items.filter'
     ]);
 
     Route::get('items/{sku}', [

@@ -42,8 +42,14 @@ trait ScraperTrait
         $client = new Client();
     
         try {
-            $request = $client->get($url)->getBody()->getContents();
-            return $request;
+            $isZaloraURL = $this->checkZaloraURL($url);
+
+            if ($isZaloraURL) {
+                $request = $client->get($url)->getBody()->getContents();
+                return $request;
+            }
+
+            return 0;
         } catch (Exception $e) {
             if ($e->getCode() == 404) {
                 //url is gone
@@ -63,5 +69,17 @@ trait ScraperTrait
         }
 
         return 0;
+    }
+
+    public function checkZaloraURL($url)
+    {
+        if (strpos($url, 'zalora.co.id') !== false) {
+            return true;
+        }       
+        
+        session()->put('errorURL', 'URL must from zalora.co.id');
+        session()->put('errorCode', 500);
+
+        return false;
     }
 }

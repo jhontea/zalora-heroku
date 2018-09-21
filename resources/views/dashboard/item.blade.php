@@ -41,6 +41,8 @@
         text-transform: none;
         height: 10px;
     }
+
+    div#preloader { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; opacity: 0.5; overflow: visible; background: #333 url('http://files.mimoymima.com/images/loading.gif') no-repeat center center; }
 </style>
 @endsection
 
@@ -49,9 +51,40 @@ All Items
 @endsection
 
 @section('content')
+        <div id="preloader" style="display: none"></div>
+
         <div class="content">
             <div class="container-fluid">
+            
+            <div class="content">
                 <div class="row">
+                    <!-- Category -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="catID">
+                                <option value="">Select a Category</option>
+                                @foreach($categories as $key => $value)
+                                <option class="option" value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Sort -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Sort</label>
+                            <select id="sortID">
+                                <option value="">Select Sort</option>
+                                <option class="option" value="asc">Lowest discount</option>
+                                <option class="option" value="desc">Highest discount</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div id="productData" class="row">
                 @if ($userItems)
                     @foreach ($userItems as $data)
                     <div class="col-lg-3 col-md-5 col-sm-4" style="padding-bottom: 15px;">
@@ -99,8 +132,64 @@ All Items
                         </div>
                     </div>
                     @endforeach
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 15px;">
+                        {{ $userItems->links() }}
+                    </div>
                 @endif
                 </div>
             </div>
         </div>
+@endsection
+
+@section('scripts')
+<script>
+$(document).ready(function(){
+  var filters = [];
+
+  $('#catID').on('change', function() {
+    var cat = this.value;
+    filters['category'] = cat;
+    $('#preloader').show();
+    getData('category', cat)
+  });
+
+  $('#sortID').on('change', function() {
+    var sorting = this.value;
+    filters['sorting'] = sorting;
+    $('#preloader').show();
+    getData('sorting', sorting)
+  });
+  
+  function getData(type, value) {
+    var params = '';
+    var iterate = 0;
+
+    for (key in filters) {
+        if (iterate == 0) {
+            params = '?' + key + '=' + filters[key]
+        } else {
+            params += '&' + key + '=' + filters[key]
+        }
+        iterate++
+        console.log(params)
+    }
+
+    var cat = value
+    var sorting = 'asc'
+
+    $.ajax({
+      type: 'get',
+      dataType: 'html',
+      url: '{{ url('/dashboard/items/filter') }}' + params,
+      success:function(response){  
+        $('#preloader').hide();      
+        $("#productData").html(response);
+      },
+      complete: function(){
+        $('#preloader').hide(); 
+      }
+    });
+  }
+});
+</script>
 @endsection
